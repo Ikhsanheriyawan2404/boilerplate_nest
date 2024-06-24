@@ -1,0 +1,110 @@
+# @name login
+@baseUrl = http://localhost:4000
+@authToken = {{login.response.body.access.token}}
+@refreshToken = {{login.response.body.refresh.token}}
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "superadmin@gmail.com",
+  "password": "admin"
+}
+########
+# @name refresh
+# @authToken = {{refresh.response.body.access.token}}
+# @refreshToken = {{refresh.response.body.refresh.token}}
+GET {{baseUrl}}/auth/refresh
+Authorization: Bearer {{refreshToken}}
+# Authorization: Bearer
+
+###
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{refreshToken}}
+
+##########
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer {{authToken}}
+###
+GET {{baseUrl}}/users
+Authorization: Bearer {{authToken}}
+###
+GET {{baseUrl}}/users/trashed
+Authorization: Bearer {{authToken}}
+###
+GET {{baseUrl}}/users/1
+Authorization: Bearer {{authToken}}
+###
+
+PUT {{baseUrl}}/users/2
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "admin2",
+    "email": "admin@gmail.com",
+    "roles": [2]
+}
+
+###
+POST  {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "admin2",
+    "email": "admin2@gmail.com",
+    "password": "admin123",
+    "password_confirmation": "admin123",
+    "roles": [1]
+}
+###
+PUT {{baseUrl}}/users/11/restore
+Authorization: Bearer {{authToken}}
+
+###
+DELETE {{baseUrl}}/users/11/force
+Authorization: Bearer {{authToken}}
+###
+DELETE  {{baseUrl}}/users/11
+Authorization: Bearer {{authToken}}
+
+
+###
+
+GET {{baseUrl}}/users/parents/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/roles
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/roles/5
+Authorization: Bearer {{authToken}}
+
+###
+POST {{baseUrl}}/roles
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "newROlePisaniemah",
+    "permissions": [1,2,3]
+}
+
+###
+PUT {{baseUrl}}/roles/5
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "newRoleEdit",
+    "permissions": [1]
+}
+
+###
+DELETE {{baseUrl}}/roles/7
+Authorization: Bearer {{authToken}}
+
+
