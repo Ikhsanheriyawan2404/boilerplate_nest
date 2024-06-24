@@ -11,10 +11,12 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install --production
+RUN npm install
 
 # Bundle app source
 COPY . .
+
+# RUN npx prisma db push
 
 # Generate Prisma client (jika diperlukan)
 RUN npx prisma generate
@@ -22,8 +24,10 @@ RUN npx prisma generate
 # Build the application
 RUN npm run build
 
+# RUN npm run seed
+
 # Expose port
 EXPOSE 4000
 
 # Start the server
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "dist/src/main.js"]
